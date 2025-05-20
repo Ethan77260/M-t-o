@@ -1,25 +1,28 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family:Georgia, 'Times New Roman', Times, serif;
   background: #eef;
   margin: 0;
   padding: 0;
+  text-underline-offset: 5px;
+  text-decoration: underline;
 }
 
-.container {
+.tableau {
   max-width: 900px;
   margin: auto;
   padding: 20px;
   text-align: center;
 }
 
-.search {
+.recherche {
   margin-bottom: 20px;
 }
 
-#cityInput {
+#villeInput {
   padding: 10px;
   width: 60%;
   font-size: 16px;
+  border-radius: 40px;
 }
 
 button {
@@ -27,24 +30,30 @@ button {
   font-size: 16px;
   margin-left: 5px;
   cursor: pointer;
+  border-radius: 40px;
 }
 
-.card {
+.carte {
   display: inline-block;
-  background-color: #e87e0b;
+  background-color:coral;
   margin: 10px;
   padding: 20px;
-  border-radius: 12px;
+  border-radius: 40px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   width: 250px;
-  text-align: center;
+  text-align:center;
+  text-underline-offset: 5px;
+  text-decoration: underline;
+  font-family:Georgia, 'Times New Roman', Times, serif;
 }
 
-.card img {
+.carte img {
   width: 60px;
-  background-color: #e87e0b;
+  background-color:coral;
 }
 
-.card button {
+.carte button {
   margin-top: 10px;
+  border-radius: 10px;
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }

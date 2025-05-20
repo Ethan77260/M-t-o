@@ -1,30 +1,30 @@
 const API_KEY = "faa032b4a28313e3a26b58fbd509d82c"; // Remplace avec ta vraie clé API
-const cardsContainer = document.getElementById('cardsContainer');
-let cities = JSON.parse(localStorage.getItem('cities')) || [];
+const cartesContainer = document.getElementById('cartesContainer');
+let villes = JSON.parse(localStorage.getItem('villes')) || [];
 
-function saveCities() {
-  localStorage.setItem('cities', JSON.stringify(cities));
+function savevilles() {
+  localStorage.setItem('villes', JSON.stringify(villes));
 }
+ 
+function createcarte(ville, weather) {
+  const carte = document.createElement('div');
+  carte.className = 'carte';
+  carte.id = ville;
 
-function createCard(city, weather) {
-  const card = document.createElement('div');
-  card.className = 'card';
-  card.id = city;
-
-  card.innerHTML = `
+  carte.innerHTML = `
     <h3>${weather.name}</h3>
     <img src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" alt="${weather.weather[0].description}" />
     <p>${weather.main.temp}°C</p>
     <p>${weather.weather[0].description}</p>
-    <button onclick="refreshCity('${city}')">🔄 Rafraîchir</button>
-    <button onclick="removeCity('${city}')">❌ Supprimer</button>
+    <button onclick="refreshville('${ville}')">🔄 Rafraîchir</button>
+    <button onclick="removeville('${ville}')">❌ Supprimer</button>
   `;
 
-  return card;
+  return carte;
 }
 
-function fetchWeather(city) {
-  return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=fr`)
+function fetchWeather(ville) {
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=${API_KEY}&units=metric&lang=fr`)
     .then(res => {
       if (!res.ok) throw new Error("Ville non trouvée");
       return res.json();
@@ -32,42 +32,42 @@ function fetchWeather(city) {
 }
 
 function ajout_ville() {
-  const input = document.getElementById('cityInput');
-  const city = input.value.trim();
+  const input = document.getElementById('villeInput');
+  const ville = input.value.trim();
 
-  if (!city || cities.includes(city)) return;
+  if (!ville || villes.includes(ville)) return;
 
-  fetchWeather(city)
+  fetchWeather(ville)
     .then(data => {
-      cities.push(city);
-      saveCities();
-      cardsContainer.appendChild(createCard(city, data));
+      villes.push(ville);
+      savevilles();
+      cartesContainer.appendChild(createcarte(ville, data));
       input.value = '';
     })
     .catch(() => alert('Erreur : ville introuvable.'));
 }
 
-function removeCity(city) {
-  cities = cities.filter(c => c !== city);
-  saveCities();
-  document.getElementById(city).remove();
+function removeville(ville) {
+  villes = villes.filter(c => c !== ville);
+  savevilles();
+  document.getElementById(ville).remove();
 }
 
-function refreshCity(city) {
-  fetchWeather(city)
+function refreshville(ville) {
+  fetchWeather(ville)
     .then(data => {
-      const oldCard = document.getElementById(city);
-      const newCard = createCard(city, data);
-      cardsContainer.replaceChild(newCard, oldCard);
+      const oldcarte = document.getElementById(ville);
+      const newcarte = createcarte(ville, data);
+      cartesContainer.replaceChild(newcarte, oldcarte);
     });
 }
 
-function loadCities() {
-  cities.forEach(city => {
-    fetchWeather(city).then(data => {
-      cardsContainer.appendChild(createCard(city, data));
+function loadvilles() {
+  villes.forEach(ville => {
+    fetchWeather(ville).then(data => {
+      cartesContainer.appendChild(createcarte(ville, data));
     });
   });
 }
 
-window.onload = loadCities;
+window.onload = loadvilles;
